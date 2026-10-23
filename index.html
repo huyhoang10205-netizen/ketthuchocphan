@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7036cf">
+  <meta name="description" content="FinTrack - Ứng dụng quản lý thu chi cá nhân với biểu đồ, lịch sử giao dịch và lưu trữ LocalStorage.">
+  <title>FinTrack | Tổng quan tài chính</title>
+  <link rel="stylesheet" href="Style.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+<svg class="svg-icons" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="ico-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-8h6v8"/></symbol>
+  <symbol id="ico-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m6 16 5-5 4 3 5-8"/></symbol>
+  <symbol id="ico-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+  <symbol id="ico-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="ico-wallet" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="16" rx="3"/><path d="M2 10h20M16 15h2M6 5V3h13"/></symbol>
+  <symbol id="ico-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol>
+  <symbol id="ico-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="ico-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="ico-download" viewBox="0 0 24 24"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 18v3h16v-3"/></symbol>
+  <symbol id="ico-spark" viewBox="0 0 24 24"><path d="m12 2 2.8 7.2L22 12l-7.2 2.8L12 22l-2.8-7.2L2 12l7.2-2.8z"/></symbol>
+</svg>
+<div class="layout clearfix">
+  <aside class="sidebar" aria-label="Menu điều hướng">
+    <a class="brand" href="#tong-quan"><span class="brand-badge">F</span><span>Fin<span class="brand-emphasis">Track</span><small>PERSONAL FINANCE</small></span></a>
+    <p class="nav-heading">KHÔNG GIAN CỦA BẠN</p>
+    <nav class="side-menu" aria-label="Điều hướng chính">
+      <a href="#tong-quan" class="nav-item active" data-nav="tong-quan"><svg><use href="#ico-home"/></svg>Tổng quan</a>
+      <a href="#bieu-do" class="nav-item" data-nav="bieu-do"><svg><use href="#ico-chart"/></svg>Phân tích dòng tiền</a>
+      <a href="#giao-dich" class="nav-item" data-nav="giao-dich"><svg><use href="#ico-list"/></svg>Lịch sử giao dịch</a>
+      <a href="#them-giao-dich" class="nav-item" data-nav="them-giao-dich"><svg><use href="#ico-plus"/></svg>Thêm giao dịch</a>
+      <a href="bai42/42.html" class="nav-item"><svg><use href="#ico-list"/></svg>Bài tập 42</a>
+    </nav>
+    <div class="sidebar-note"><span class="sidebar-note-icon">✦</span><strong>Kiểm soát tài chính</strong><p>Ghi chép đều đặn giúp bạn hiểu rõ cách mình sử dụng tiền.</p></div>
+    <div class="sidebar-foot">Bài thi Lập trình Web · EG07</div>
+  </aside>
+
+  <div class="app-content">
+    <header class="topbar clearfix">
+      <div class="welcome">Xin chào 👋 <strong>Chào mừng trở lại!</strong></div>
+      <div class="top-right"><span class="top-today" id="todayText"></span><span class="avatar" aria-label="Tài khoản demo">FT</span></div>
+    </header>
+    <main class="main-area" id="tong-quan">
+      <div class="headline clearfix"><div><p class="eyebrow">TRANG CHỦ / TỔNG QUAN</p><h1>Tổng quan tài chính <span class="heading-star">✦</span></h1><p class="subheadline">Theo dõi dòng tiền và chủ động với ngân sách của bạn.</p></div><span class="demo-pill"><span class="status-dot"></span>DỮ LIỆU MINH HỌA</span></div>
+
+      <div class="filter-bar clearfix" aria-label="Lọc theo tháng">
+        <label for="periodInput">Lọc theo</label>
+        <span class="month-wrapper"><svg><use href="#ico-calendar"/></svg><input id="periodInput" type="month" aria-label="Tháng thống kê"></span>
+        <span class="account-pill"><svg><use href="#ico-wallet"/></svg> Ví cá nhân <span>•••• 2026</span></span>
+      </div>
+
+      <section class="summary clearfix" aria-label="Tổng quan số dư thu chi">
+        <article class="balance-card">
+          <div class="hero-orbit hero-orbit-a"></div><div class="hero-orbit hero-orbit-b"></div>
+          <div class="balance-top"><span><svg><use href="#ico-wallet"/></svg> SỐ DƯ HIỆN TẠI</span><span class="balance-dots">•••</span></div>
+          <strong id="balanceValue" class="balance-value">0 ₫</strong>
+          <div class="balance-foot clearfix"><span>Tổng tiền đã ghi nhận<br><small>Toàn bộ lịch sử, không chỉ tháng đang xem</small></span><span class="balance-badge">VND</span></div>
+        </article>
+        <article class="small-card income-card"><span class="mini-card-icon income-bg">↙</span><span class="mini-label">TỔNG THU <small>Trong tháng đã chọn</small></span><strong id="incomeValue">0 ₫</strong><span class="mini-foot positive">↑ Dòng tiền vào</span></article>
+        <article class="small-card expense-card"><span class="mini-card-icon expense-bg">↗</span><span class="mini-label">TỔNG CHI <small>Trong tháng đã chọn</small></span><strong id="expenseValue">0 ₫</strong><span class="mini-foot negative">↓ Dòng tiền ra</span></article>
+      </section>
+
+      <div class="content-columns clearfix">
+        <div class="content-primary">
+          <section class="panel graph-panel" id="bieu-do">
+            <div class="panel-header clearfix"><div><p class="panel-eyebrow">THỐNG KÊ TÀI CHÍNH</p><h2 id="chartHeading">Biểu đồ dòng tiền</h2><p id="chartSubheading">Tình hình thu chi trong tháng</p></div><span class="chart-tag">6 THÁNG GẦN NHẤT</span></div>
+            <div class="chart-switch" aria-label="Chế độ biểu đồ">
+              <button class="chart-tab selected" data-chart="overview" type="button" aria-pressed="true">Tổng quan</button>
+              <button class="chart-tab" data-chart="income" type="button" aria-pressed="false">Tiền vào</button>
+              <button class="chart-tab" data-chart="expense" type="button" aria-pressed="false">Tiền ra</button>
+            </div>
+            <div class="chart-body"><svg id="financeChart" role="img" aria-label="Biểu đồ tiền thu và chi" viewBox="0 0 700 260" preserveAspectRatio="xMidYMid meet"></svg></div>
+            <div class="chart-legend" id="chartLegend"><span><i class="legend-dot green-dot"></i> Thu nhập</span><span><i class="legend-dot red-dot"></i> Chi tiêu</span></div>
+            <div class="chart-note"><svg><use href="#ico-spark"/></svg><span>Biểu đồ được tính tự động từ những giao dịch đã lưu, không kết nối ngân hàng.</span></div>
+          </section>
+
+          <section class="panel breakdown-panel" id="phan-loai">
+            <div class="panel-header clearfix"><div><p class="panel-eyebrow">CHI TIÊU TRONG THÁNG</p><h2>Thống kê chi tiêu</h2><p>Phân bổ các khoản chi theo danh mục</p></div><span class="breakdown-total" id="categoryTotal">0 ₫</span></div>
+            <div class="stacked-track" id="categoryStack" aria-label="Thanh tổng hợp các danh mục chi tiêu"></div>
+            <div id="categoryList" class="category-list"></div>
+          </section>
+        </div>
+
+        <div class="content-secondary">
+          <section class="panel form-panel" id="them-giao-dich">
+            <div class="form-panel-top"><span class="form-panel-icon"><svg><use href="#ico-plus"/></svg></span><div><p class="panel-eyebrow">QUẢN LÝ THU CHI</p><h2 id="formHeading">Thêm giao dịch</h2><p>Ghi lại khoản tiền của bạn</p></div></div>
+            <form id="transactionForm" novalidate>
+              <div class="field"><label for="typeInput">Loại giao dịch <b>*</b></label><select id="typeInput" required><option value="expense">Khoản chi (−)</option><option value="income">Khoản thu (+)</option></select></div>
+              <div class="field"><label for="amountInput">Số tiền (VNĐ) <b>*</b></label><input type="number" id="amountInput" step="1" min="1" max="999999999999" inputmode="numeric" placeholder="Ví dụ: 250000" required></div>
+              <div class="field"><label for="categoryInput">Danh mục <b>*</b></label><select id="categoryInput" required></select></div>
+              <div class="field"><label for="dateInput">Ngày giao dịch <b>*</b></label><input type="date" id="dateInput" required></div>
+              <div class="field"><label for="noteInput">Nội dung / ghi chú</label><input type="text" id="noteInput" maxlength="120" placeholder="Ví dụ: Mua đồ dùng hằng ngày"></div>
+              <p class="form-feedback" id="formFeedback" role="status" aria-live="polite"></p>
+              <button class="primary-button" type="submit" id="saveButton"><svg><use href="#ico-plus"/></svg> Lưu giao dịch</button>
+              <button class="cancel-edit" id="cancelEdit" type="button" hidden>Hủy chỉnh sửa</button>
+            </form>
+          </section>
+          <div class="side-tip"><span>💡</span><div><strong>Mẹo quản lý tài chính</strong><p>Phân loại giao dịch mỗi ngày để dễ theo dõi ngân sách cuối tháng.</p></div></div>
+        </div>
+      </div>
+
+      <section class="panel history-panel" id="giao-dich">
+        <div class="panel-header history-heading clearfix"><div><p class="panel-eyebrow">LỊCH SỬ CỦA BẠN</p><h2>Lịch sử giao dịch</h2><p>Chi tiết thu nhập và chi tiêu đã ghi nhận</p></div><button class="outline-button" id="exportButton" type="button"><svg><use href="#ico-download"/></svg> Xuất CSV</button></div>
+        <div class="history-toolbar clearfix">
+          <div class="search-field"><svg><use href="#ico-search"/></svg><input id="searchInput" type="search" placeholder="Tìm giao dịch, ghi chú, danh mục..." aria-label="Tìm kiếm giao dịch"></div>
+          <select id="historyType" aria-label="Lọc loại giao dịch"><option value="all">Tất cả giao dịch</option><option value="income">Khoản thu</option><option value="expense">Khoản chi</option></select>
+          <label class="check-month"><input type="checkbox" id="allMonths"> Tất cả các tháng</label>
+        </div>
+        <p class="history-count" id="historyCount">0 giao dịch</p>
+        <div id="transactionList" class="transaction-list"></div>
+        <div class="history-actions clearfix"><button type="button" id="resetDemoButton">Khôi phục dữ liệu mẫu</button><button type="button" id="clearAllButton">Xóa tất cả giao dịch</button></div>
+      </section>
+
+      <section class="assignment-box" aria-labelledby="linkTitle"><div><h2 id="linkTitle">Bài tập 40, 41, 42</h2><p>Xem minh chứng Bài 40, Bài 41 và mở bài thực hành Bài 42 (6 bài JavaScript).</p></div><div class="exercise-buttons"><a data-exercise="40" href="minhchung/bai40.html">Bài 40 (ảnh) ↗</a><a data-exercise="41" href="minhchung/bai41.html">Bài 41 (ảnh) ↗</a><a data-exercise="42" href="bai42/42.html">Bài 42 (6 bài) ↗</a></div></section>
+      <footer class="footer">FinTrack © 2026 · Đề thi EG07 <span>HTML · CSS · JavaScript · LocalStorage</span></footer>
+    </main>
+  </div>
+</div>
+<nav class="mobile-nav" aria-label="Điều hướng trên điện thoại"><a href="#tong-quan"><svg><use href="#ico-home"/></svg><span>Tổng quan</span></a><a href="#bieu-do"><svg><use href="#ico-chart"/></svg><span>Biểu đồ</span></a><a href="#them-giao-dich" class="mobile-add"><svg><use href="#ico-plus"/></svg><span>Thêm mới</span></a><a href="#giao-dich"><svg><use href="#ico-list"/></svg><span>Giao dịch</span></a><a href="bai42/42.html"><svg><use href="#ico-spark"/></svg><span>Bài 42</span></a></nav>
+</body>
+</html>
